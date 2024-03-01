@@ -7,6 +7,7 @@ import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import UserProfile from "./UserProfile";
 import UserProfileEducation from "./UserProfileEducation";
+import { UserProfileProvider } from "./UserProfileProvider";
 
 type TabItem = {
   label: string;
@@ -52,24 +53,29 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
   if (!user) return null;
 
   return (
-    <BasePageComponent
-      header={<UserProfileHeader user={user} />}
-      tabs={
-        <>
-          <Tabs value={tabValue} onChange={onTabChange}>
-            {tabConfig.map((tab) => (
-              <Tab key={tab.key} label={tab.label} value={tab.key} />
-            ))}
-          </Tabs>
-          <Routes>
-            <Route path="/user/profile" element={<UserProfile />} />
-            <Route path="/user/education" element={<UserProfileEducation />} />
-          </Routes>
-        </>
-      }
-    >
-      {children}
-    </BasePageComponent>
+    <UserProfileProvider user={user}>
+      <BasePageComponent
+        header={<UserProfileHeader user={user} />}
+        tabs={
+          <>
+            <Tabs value={tabValue} onChange={onTabChange}>
+              {tabConfig.map((tab) => (
+                <Tab key={tab.key} label={tab.label} value={tab.key} />
+              ))}
+            </Tabs>
+            <Routes>
+              <Route path="/user/profile" element={<UserProfile />} />
+              <Route
+                path="/user/education"
+                element={<UserProfileEducation />}
+              />
+            </Routes>
+          </>
+        }
+      >
+        {children}
+      </BasePageComponent>
+    </UserProfileProvider>
   );
 };
 

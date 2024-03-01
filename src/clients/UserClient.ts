@@ -1,14 +1,59 @@
 import axios from "axios";
+import * as dayjs from "dayjs";
+
+export class Education {
+  school: string;
+  date: Date;
+  education: string;
+  major: string;
+  description: string;
+
+  constructor(
+    school: string,
+    date: Date,
+    education: string,
+    major: string,
+    description: string
+  ) {
+    this.school = school;
+    this.date = new Date(date);
+    this.education = education;
+    this.major = major;
+    this.description = description;
+  }
+}
+
+export class Address {
+  zipCode: string;
+  city: string;
+  country: string;
+
+  constructor(zipCode: string, city: string, country: string) {
+    this.zipCode = zipCode;
+    this.city = city;
+    this.country = country;
+  }
+}
 
 export class User {
   name: string;
   email: string;
   title: string;
+  address: Address;
+  education: Education[];
 
-  constructor(name: string, email: string, title: string) {
+  constructor(
+    name: string,
+    email: string,
+    title: string,
+    address: Address,
+    education: Education[]
+  ) {
     this.name = name;
     this.email = email;
     this.title = title;
+    this.address = address;
+    this.education = education;
   }
 }
 
@@ -30,14 +75,53 @@ export class UserClient {
     return new User(
       response.data.name,
       response.data.email,
-      response.data.title
+      response.data.title,
+      response.data.address,
+      response.data.education
     );
   };
 
   getUser = async (userId: string) => {
     const response = await axios
-      .get(
+      .get<User>(
         `https://curriculum-vitae-39869-default-rtdb.firebaseio.com/users/${userId}.json?print=pretty`
+      )
+      .then((data) => {
+        return data;
+      });
+    console.log("response", response.data);
+
+    const educations: Education[] = [];
+    response.data.education.forEach((education) => {
+      educations.push(
+        new Education(
+          education.school,
+          education.date,
+          education.education,
+          education.major,
+          education.description
+        )
+      );
+    });
+
+    const address = new Address(
+      response.data.address.zipCode,
+      response.data.address.city,
+      response.data.address.country
+    );
+
+    return new User(
+      response.data.name,
+      response.data.email,
+      response.data.title,
+      address,
+      educations
+    );
+  };
+  getUserEducations = async (userId: string) => {
+    const response = await axios
+      .get(
+        `https://curriculum-vitae-39869-default-rtdb.firebaseio.com/users/${userId}/education.json?print=pretty`
       )
       .then((data) => {
         return data;
@@ -46,7 +130,9 @@ export class UserClient {
     return new User(
       response.data.name,
       response.data.email,
-      response.data.title
+      response.data.title,
+      response.data.address,
+      response.data.education
     );
   };
 }

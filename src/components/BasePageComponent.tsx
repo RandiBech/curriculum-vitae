@@ -19,10 +19,10 @@ const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
           width={"100%"}
         >
           {header}
-          {tabs}
+          <Box mt={header ? 2 : 0}>{tabs}</Box>
         </Box>
       )}
-      <Box mt={2}>{children}</Box>
+      <Box m={2}>{children}</Box>
     </Box>
   );
 };
