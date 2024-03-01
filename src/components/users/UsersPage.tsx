@@ -2,7 +2,7 @@ import React from "react";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 
 
-const UsersPage = () => {
+const UsersPage: React.FC = () => {
 const {data: users} = useFetchUsers();
 
 if(!users) return null;
