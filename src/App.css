@@ -1,6 +1,9 @@
 .App {
-  display: flex;
   margin-left: 250px;
+}
+
+.App-content {
+  background-color: lightgrey;
 }
 
 .App-logo {

@@ -10,7 +10,7 @@ const NavBar = () => {
       <Button component={RouterLink} to="/">
         Users
       </Button>
-      <Button component={RouterLink} to="/profile">
+      <Button component={RouterLink} to="/user">
         Profile
       </Button>
     </div>

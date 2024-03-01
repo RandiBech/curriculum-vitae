@@ -3,17 +3,27 @@ import { Box } from "@mui/material";
 
 type BasePageComponentProps = {
   header?: React.ReactNode;
+  tabs?: React.ReactNode;
   children: React.ReactNode;
 };
 
 const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
-  const { header, children } = props;
+  const { header, tabs, children } = props;
 
   return (
-    <>
-      {header}
+    <Box height={"100vh"}>
+      {(header || tabs) && (
+        <Box
+          sx={{ backgroundColor: "white" }}
+          height={tabs ? "130px" : "100px"}
+          width={"100%"}
+        >
+          {header}
+          {tabs}
+        </Box>
+      )}
       <Box mt={2}>{children}</Box>
-    </>
+    </Box>
   );
 };
 

@@ -1,19 +1,12 @@
 import React from "react";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 
-
 const UsersPage: React.FC = () => {
-const {data: users} = useFetchUsers();
+  const { data: users } = useFetchUsers();
 
-if(!users) return null;
+  if (!users) return null;
 
-return (
-<>
-{users.name}
-</>
-)
-
-
-}
+  return <>gggg</>;
+};
 
 export default UsersPage;
