@@ -22,7 +22,7 @@ const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
           <Box mt={header ? 2 : 0}>{tabs}</Box>
         </Box>
       )}
-      <Box m={2}>{children}</Box>
+      <Box p={2}>{children}</Box>
     </Box>
   );
 };

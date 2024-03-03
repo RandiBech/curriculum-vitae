@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import UserProfilePage from "./components/users/UserProfilePage";
 import UserProfile from "./components/users/UserProfile";
 import UserProfileEducation from "./components/users/UserProfileEducation";
+import { Paths } from "./Paths";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,15 +19,15 @@ function App() {
         <Routes>
           <Route path="/" element={<UsersPage />} />
           <Route
-            path="/user"
+            path={Paths.User}
             element={<UserProfilePage children={<UserProfile />} />}
           />
           <Route
-            path="/user/profile"
+            path={Paths.UserProfile}
             element={<UserProfilePage children={<UserProfile />} />}
           />
           <Route
-            path="/user/education"
+            path={Paths.UserEducation}
             element={<UserProfilePage children={<UserProfileEducation />} />}
           />
         </Routes>

@@ -9,7 +9,11 @@
   transition: 0.5s ease;
   overflow-x: hidden;
   padding-top: 20px;
+}
+
+.navBar-content {
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
 }

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useFetchUser } from "../../hooks/useFetchUser";
 import BasePageComponent from "../BasePageComponent";
 import UserProfileHeader from "./UserProfileHeader";
-import { Box, Typography, Stack, SvgIcon, Tabs, Tab } from "@mui/material";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Tabs, Tab } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { Route, Routes } from "react-router";
 import UserProfile from "./UserProfile";
 import UserProfileEducation from "./UserProfileEducation";
 import { UserProfileProvider } from "./UserProfileProvider";
+import { Paths } from "../../Paths";
 
 type TabItem = {
   label: string;
@@ -26,19 +27,19 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
 
   useEffect(() => {
     if (tabValue === "") {
-      setTabValue("profile");
-      history("/user/profile");
+      setTabValue(Paths.UserProfile);
+      history(Paths.UserProfile);
     }
-  });
+  }, [history, tabValue]);
 
   const tabConfig: TabItem[] = [
     {
       label: "Profile",
-      key: "profile",
+      key: Paths.UserProfile,
     },
     {
       label: "Education",
-      key: "education",
+      key: Paths.UserEducation,
     },
   ];
 
@@ -47,7 +48,7 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
     value: string
   ) => {
     setTabValue(value);
-    history(`/user/${value}`);
+    history(value);
   };
 
   if (!user) return null;
@@ -64,9 +65,9 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
               ))}
             </Tabs>
             <Routes>
-              <Route path="/user/profile" element={<UserProfile />} />
+              <Route path={Paths.UserProfile} element={<UserProfile />} />
               <Route
-                path="/user/education"
+                path={Paths.UserEducation}
                 element={<UserProfileEducation />}
               />
             </Routes>
