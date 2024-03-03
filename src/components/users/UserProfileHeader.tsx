@@ -11,13 +11,13 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = (props) => {
   const { user } = props;
 
   return (
-    <Box>
+    <Box pt={2} pl={2}>
       <Stack direction={"row"}>
         <SvgIcon fontSize="large">
           <PersonIcon />
         </SvgIcon>
         <Box ml={2}>
-          <Typography variant="h4">{user.name}</Typography>
+          <Typography variant="h5">{user.name}</Typography>
           <Typography variant="body1">{user.title}</Typography>
         </Box>
       </Stack>

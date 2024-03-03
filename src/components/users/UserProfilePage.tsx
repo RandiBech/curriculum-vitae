@@ -9,6 +9,7 @@ import UserProfile from "./UserProfile";
 import UserProfileEducation from "./UserProfileEducation";
 import { UserProfileProvider } from "./UserProfileProvider";
 import { Paths } from "../../Paths";
+import LoadingScreen from "../utils/LoadingScreen";
 
 type TabItem = {
   label: string;
@@ -21,7 +22,7 @@ type UserProfilePageProps = {
 
 const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
   const { children } = props;
-  const { data: user } = useFetchUser("user1");
+  const { data: user, status: userStatus } = useFetchUser("user1");
   const [tabValue, setTabValue] = useState<string>("");
   const history = useNavigate();
 
@@ -51,6 +52,11 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
     history(value);
   };
 
+  if (userStatus === "loading") {
+    return <LoadingScreen />;
+  }
+
+  console.log(userStatus, user);
   if (!user) return null;
 
   return (

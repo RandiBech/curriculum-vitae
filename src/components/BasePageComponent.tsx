@@ -15,7 +15,7 @@ const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
       {(header || tabs) && (
         <Box
           sx={{ backgroundColor: "white" }}
-          height={tabs ? "130px" : "100px"}
+          height={tabs ? "136px" : "100px"}
           width={"100%"}
         >
           {header}

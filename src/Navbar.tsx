@@ -4,14 +4,21 @@ import { NavLink as NavLinkBase } from "react-router-dom";
 import { Button, Typography, Divider, Box } from "@mui/material";
 import { styled } from "@mui/system";
 import { Paths } from "./Paths";
+import { Person as PersonIcon } from "@mui/icons-material";
 
 type NavLinkProps = {
   path: string;
+  icon?: React.ReactNode;
   children: React.ReactNode;
 };
 
 const NavLink = styled((props: NavLinkProps) => (
-  <Button component={NavLinkBase} {...props} to={props.path} />
+  <Button
+    component={NavLinkBase}
+    {...props}
+    to={props.path}
+    startIcon={props.icon}
+  />
 ))(() => ({
   textDecoration: "none",
   color: "white",
@@ -36,7 +43,9 @@ const NavBar = () => {
         <Divider sx={{ backgroundColor: "white" }} />
         <Box mt={2} />
         <NavLink path="/">Home</NavLink>
-        <NavLink path={Paths.User}>Profile</NavLink>
+        <NavLink path={Paths.User} icon={<PersonIcon />}>
+          Profile
+        </NavLink>
       </div>
     </div>
   );

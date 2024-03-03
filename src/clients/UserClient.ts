@@ -39,6 +39,7 @@ export class User {
   name: string;
   email: string;
   title: string;
+  aboutMe: string;
   address: Address;
   education: Education[];
 
@@ -46,12 +47,14 @@ export class User {
     name: string,
     email: string,
     title: string,
+    aboutMe: string,
     address: Address,
     education: Education[]
   ) {
     this.name = name;
     this.email = email;
     this.title = title;
+    this.aboutMe = aboutMe;
     this.address = address;
     this.education = education;
   }
@@ -76,6 +79,7 @@ export class UserClient {
       response.data.name,
       response.data.email,
       response.data.title,
+      response.data.aboutMe,
       response.data.address,
       response.data.education
     );
@@ -90,7 +94,7 @@ export class UserClient {
         return data;
       });
     console.log("response", response.data);
-
+    if (!response) return null;
     const educations: Education[] = [];
     response.data.education.forEach((education) => {
       educations.push(
@@ -98,6 +102,7 @@ export class UserClient {
           education.school,
           education.date,
           education.education,
+
           education.major,
           education.description
         )
@@ -114,10 +119,12 @@ export class UserClient {
       response.data.name,
       response.data.email,
       response.data.title,
+      response.data.aboutMe,
       address,
       educations
     );
   };
+
   getUserEducations = async (userId: string) => {
     const response = await axios
       .get(
@@ -131,6 +138,7 @@ export class UserClient {
       response.data.name,
       response.data.email,
       response.data.title,
+      response.data.aboutMe,
       response.data.address,
       response.data.education
     );
