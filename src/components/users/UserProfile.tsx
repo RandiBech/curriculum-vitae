@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Card,
   Table,
@@ -7,33 +7,125 @@ import {
   TableCell,
   CardHeader,
   CardContent,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import { UserProfileContext } from "./UserProfileProvider";
+import CreateIcon from "@mui/icons-material/Create";
+import _ from "lodash";
 
 const UserProfile: React.FC = () => {
   const context = useContext(UserProfileContext);
+  const [initialUser, setInitialUser] = useState(context?.user);
+  const [userState, setUserState] = useState(initialUser);
+
+  const [openAboutMeDialog, setOpenAboutMeDialog] = useState(false);
+
+  useEffect(() => {
+    if (context?.user) {
+      setInitialUser(context.user);
+      setUserState(context.user);
+    }
+  }, [context?.user]);
+
+  const onEditAboutMe = () => {
+    setOpenAboutMeDialog(true);
+  };
+
+  const onCloseEditAboutMe = () => {
+    if (userState) {
+      userState.aboutMe = initialUser?.aboutMe ?? "";
+      setUserState(userState);
+    }
+    setOpenAboutMeDialog(false);
+  };
+
+  const onAboutMeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newUser = _.cloneDeep(initialUser);
+    if (newUser) {
+      newUser.aboutMe = event.target.value;
+      setUserState(newUser);
+    }
+  };
+
+  const onSaveAboutMe = () => {
+    // TODO: Call update with request
+  };
+
+  if (!initialUser) return null;
 
   return (
     <>
-      <Card title="Profile information">
+      <Card>
+        <CardHeader
+          title={"Profile information"}
+          action={
+            <IconButton>
+              <CreateIcon />
+            </IconButton>
+          }
+        />
         <Table>
           <TableBody>
             <TableRow>
               <TableCell>Email: </TableCell>
-              <TableCell>{context?.user.email}</TableCell>
+              <TableCell>{initialUser.email}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell>Address: </TableCell>
-              <TableCell>{`${context?.user.address.zipCode} ${context?.user.address.city}, ${context?.user.address.country}`}</TableCell>
+              <TableCell>{`${initialUser.address.zipCode} ${initialUser.address.city}, ${initialUser.address.country}`}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </Card>
-      {context?.user.aboutMe && (
-        <Card sx={{ marginTop: 2 }}>
-          <CardHeader title={"About Me"} />
-          <CardContent>{context.user.aboutMe}</CardContent>
-        </Card>
+      {initialUser.aboutMe && (
+        <>
+          <Card sx={{ marginTop: 2 }}>
+            <CardHeader
+              title={"About Me"}
+              action={
+                <IconButton onClick={onEditAboutMe}>
+                  <CreateIcon />
+                </IconButton>
+              }
+            />
+            <CardContent>{initialUser.aboutMe}</CardContent>
+          </Card>
+          <Dialog
+            open={openAboutMeDialog}
+            onClose={onCloseEditAboutMe}
+            fullWidth
+          >
+            <DialogTitle>Edit About Me</DialogTitle>
+            <DialogContent>
+              <TextField
+                value={userState?.aboutMe}
+                onChange={onAboutMeChange}
+                placeholder="Write something about yourself..."
+                multiline
+                minRows={3}
+                fullWidth
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button variant="outlined" onClick={onCloseEditAboutMe}>
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                disabled={initialUser.aboutMe === userState?.aboutMe}
+                onClick={onSaveAboutMe}
+              >
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </>
       )}
     </>
   );

@@ -1,7 +1,6 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import UsersPage from "./components/users/UsersPage";
+import Home from "./components/Home";
 import { QueryClient, QueryClientProvider } from "react-query";
 import NavBar from "./Navbar";
 import { Route, Routes } from "react-router-dom";
@@ -17,7 +16,7 @@ function App() {
       <NavBar />
       <div className="App App-content">
         <Routes>
-          <Route path="/" element={<UsersPage />} />
+          <Route path="/" element={<Home />} />
           <Route
             path={Paths.User}
             element={<UserProfilePage children={<UserProfile />} />}
