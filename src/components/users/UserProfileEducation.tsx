@@ -8,26 +8,28 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import { UserProfileContext } from "./UserProfileProvider";
+import {
+  UserProfileContext,
+  UserProfileContextType,
+} from "./UserProfileProvider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SchoolIcon from "@mui/icons-material/School";
 
 const UserProfileEducation: React.FC = () => {
-  const context = useContext(UserProfileContext);
+  const { user } = useContext(UserProfileContext) as UserProfileContextType;
   const [expanded, setExpanded] = useState<number>(-1);
 
   const onChange =
     (panel: number) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : -1);
     };
-  console.log(context?.user.education);
 
   const sortedEducations = useMemo(() => {
-    if (!context?.user.education) return [];
-    return context.user.education.sort((a, b) => {
+    if (!user.education) return [];
+    return user.education.sort((a, b) => {
       return b.start.unix() - a.start.unix();
     });
-  }, [context?.user.education]);
+  }, [user.education]);
 
   if (sortedEducations.length === 0) {
     return (
@@ -62,7 +64,10 @@ const UserProfileEducation: React.FC = () => {
             </Stack>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>{education.description}</Typography>
+            <Typography>
+              <b>Major:</b> {education.major ?? "-"}
+            </Typography>
+            <Typography mt={1}>{education.description}</Typography>
           </AccordionDetails>
         </Accordion>
       ))}

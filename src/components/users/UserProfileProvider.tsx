@@ -1,7 +1,7 @@
 import { User } from "../../clients/UserClient";
 import React, { createContext } from "react";
 
-type UserProfileContextProps = {
+export type UserProfileContextType = {
   user: User;
 };
 
@@ -10,22 +10,23 @@ type UserProfileProviderProps = {
   children: React.ReactNode;
 };
 
-export const UserProfileContext = createContext<UserProfileContextProps | null>(
+export const UserProfileContext = createContext<UserProfileContextType | null>(
   null
 );
-export const useUserProfileContext = () => {
-  if (!UserProfileContext) {
-    console.log("No UserProfileContext!");
-    return null;
-  }
+// export const useUserProfileContext = () => {
+//   if (UserProfileContext === null) {
+//     console.log("No UserProfileContext!");
+//     return undefined;
+//   }
 
-  return UserProfileContext.Consumer;
-};
+//   return UserProfileContext.Consumer;
+// };
 
 export const UserProfileProvider: React.FC<UserProfileProviderProps> = (
   props
 ) => {
   const { user, children } = props;
+
   return (
     <UserProfileContext.Provider value={{ user: user }}>
       {children}

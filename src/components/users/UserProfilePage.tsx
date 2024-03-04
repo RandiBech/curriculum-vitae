@@ -4,9 +4,6 @@ import BasePageComponent from "../BasePageComponent";
 import UserProfileHeader from "./UserProfileHeader";
 import { Tabs, Tab } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Route, Routes } from "react-router";
-import UserProfile from "./UserProfile";
-import UserProfileEducation from "./UserProfileEducation";
 import { UserProfileProvider } from "./UserProfileProvider";
 import { Paths } from "../../Paths";
 import LoadingScreen from "../utils/LoadingScreen";
@@ -42,6 +39,10 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
       label: "Education",
       key: Paths.UserEducation,
     },
+    {
+      label: "Work experience",
+      key: Paths.UserWorkExperience,
+    },
   ];
 
   const onTabChange = (
@@ -70,13 +71,6 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
                 <Tab key={tab.key} label={tab.label} value={tab.key} />
               ))}
             </Tabs>
-            <Routes>
-              <Route path={Paths.UserProfile} element={<UserProfile />} />
-              <Route
-                path={Paths.UserEducation}
-                element={<UserProfileEducation />}
-              />
-            </Routes>
           </>
         }
       >

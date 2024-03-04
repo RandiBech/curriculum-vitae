@@ -15,23 +15,26 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { UserProfileContext } from "./UserProfileProvider";
+import {
+  UserProfileContext,
+  UserProfileContextType,
+} from "./UserProfileProvider";
 import CreateIcon from "@mui/icons-material/Create";
 import _ from "lodash";
 
 const UserProfile: React.FC = () => {
-  const context = useContext(UserProfileContext);
-  const [initialUser, setInitialUser] = useState(context?.user);
+  const { user } = useContext(UserProfileContext) as UserProfileContextType;
+  const [initialUser, setInitialUser] = useState(user);
   const [userState, setUserState] = useState(initialUser);
-
   const [openAboutMeDialog, setOpenAboutMeDialog] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (context?.user) {
-      setInitialUser(context.user);
-      setUserState(context.user);
+    if (user !== initialUser) {
+      setInitialUser(user);
+      setUserState(user);
     }
-  }, [context?.user]);
+  }, [initialUser, user]);
 
   const onEditAboutMe = () => {
     setOpenAboutMeDialog(true);
@@ -54,7 +57,16 @@ const UserProfile: React.FC = () => {
   };
 
   const onSaveAboutMe = () => {
-    // TODO: Call update with request
+    setIsSaving(true);
+    try {
+      // TODO: Call update with request
+
+      setOpenAboutMeDialog(false);
+    } catch (error) {
+      console.log("Something went wrong. (show in snackbar and log error)");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (!initialUser) return null;
@@ -120,7 +132,9 @@ const UserProfile: React.FC = () => {
               </Button>
               <Button
                 variant="contained"
-                disabled={initialUser.aboutMe === userState?.aboutMe}
+                disabled={
+                  initialUser.aboutMe === userState?.aboutMe || isSaving
+                }
                 onClick={onSaveAboutMe}
               >
                 Save

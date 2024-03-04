@@ -11,7 +11,7 @@ const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
   const { header, tabs, children } = props;
 
   return (
-    <Box height={"100vh"}>
+    <Box height={"100%"}>
       {(header || tabs) && (
         <Box
           sx={{ backgroundColor: "white" }}
@@ -22,7 +22,9 @@ const BasePageComponent: React.FC<BasePageComponentProps> = (props) => {
           <Box mt={header ? 2 : 0}>{tabs}</Box>
         </Box>
       )}
-      <Box p={2}>{children}</Box>
+      <Box p={2} overflow={"auto"}>
+        {children}
+      </Box>
     </Box>
   );
 };
