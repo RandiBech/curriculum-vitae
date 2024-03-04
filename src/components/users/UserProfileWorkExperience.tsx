@@ -43,6 +43,7 @@ const UserProfileWorkExperience: React.FC = () => {
     <>
       <FormGroup sx={{ marginBottom: 2 }}>
         <FormControlLabel
+          sx={{ display: "flex", justifyContent: "end" }}
           control={<Switch onClick={onExpandAll} />}
           label="Expand all"
         />
