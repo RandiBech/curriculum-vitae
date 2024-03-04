@@ -23,11 +23,11 @@ type UserProfilePageProps = {
 const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
   const { children } = props;
   const { data: user, status: userStatus } = useFetchUser("user1");
-  const [tabValue, setTabValue] = useState<string>("");
   const history = useNavigate();
+  const [tabValue, setTabValue] = useState<string>(window.location.pathname);
 
   useEffect(() => {
-    if (tabValue === "") {
+    if (window.location.pathname === "/user") {
       setTabValue(Paths.UserProfile);
       history(Paths.UserProfile);
     }

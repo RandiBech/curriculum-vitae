@@ -2,17 +2,15 @@ import { useQuery } from "react-query";
 import { UserClient } from "../clients/UserClient";
 
 export const useFetchUsers = () => {
-    const client = new UserClient();
+  const client = new UserClient();
 
-    const getUsers = async () => {
-        return await client.getAllUsers();
-    
-    }
-    console.log('hit');
+  const getUsers = async () => {
+    return await client.getAllUsers();
+  };
 
-    return useQuery(['query-key'], getUsers, {
-        onError: (error: Error) => {
-            console.log('Error fetching all users: ', error);
-        }
-    });
-}
+  return useQuery(["query-key"], getUsers, {
+    onError: (error: Error) => {
+      console.log("Error fetching all users: ", error);
+    },
+  });
+};

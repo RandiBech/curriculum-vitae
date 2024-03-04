@@ -7,11 +7,10 @@ export const useFetchUser = (userId: string) => {
   const getUser = async () => {
     return await client.getUser(userId);
   };
-  console.log("hit");
 
   return useQuery(["query-key"], getUser, {
     onError: (error: Error) => {
-      console.log("Error fetching all users: ", error);
+      console.log("Error fetching user: ", error);
     },
   });
 };

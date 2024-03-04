@@ -78,7 +78,9 @@ const UserProfile: React.FC = () => {
             </TableRow>
             <TableRow>
               <TableCell>Address: </TableCell>
-              <TableCell>{`${initialUser.address.zipCode} ${initialUser.address.city}, ${initialUser.address.country}`}</TableCell>
+              <TableCell>{`${initialUser.address.zipCode ?? ""} ${
+                initialUser.address.city ?? ""
+              }, ${initialUser.address.country ?? ""}`}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
