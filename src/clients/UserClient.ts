@@ -1,4 +1,3 @@
-import axios from "axios";
 import dayjs from "dayjs";
 import * as testData from "./testUserData.json";
 
@@ -91,26 +90,6 @@ export class UserClient {
    *
    */
   constructor() {}
-
-  getAllUsers = async () => {
-    const response = await axios
-      .get(
-        "https://curriculum-vitae-39869-default-rtdb.firebaseio.com/users.json?print=pretty"
-      )
-      .then((data) => {
-        return data;
-      });
-    console.log("response", response.data);
-    return new User(
-      response.data.name,
-      response.data.email,
-      response.data.title,
-      response.data.aboutMe,
-      response.data.address,
-      response.data.education,
-      response.data.workExperience
-    );
-  };
 
   getUser = async (userId: string) => {
     // const response = await axios

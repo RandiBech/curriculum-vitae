@@ -13,14 +13,6 @@ type UserProfileProviderProps = {
 export const UserProfileContext = createContext<UserProfileContextType | null>(
   null
 );
-// export const useUserProfileContext = () => {
-//   if (UserProfileContext === null) {
-//     console.log("No UserProfileContext!");
-//     return undefined;
-//   }
-
-//   return UserProfileContext.Consumer;
-// };
 
 export const UserProfileProvider: React.FC<UserProfileProviderProps> = (
   props

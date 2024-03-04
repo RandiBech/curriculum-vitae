@@ -57,7 +57,6 @@ const UserProfilePage: React.FC<UserProfilePageProps> = (props) => {
     return <LoadingScreen />;
   }
 
-  console.log(userStatus, user);
   if (!user) return null;
 
   return (
